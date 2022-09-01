@@ -6,6 +6,10 @@
 
 https://github.com/openai/CLIP
 
+### AudioCLIP
+
+https://github.com/AndreyGuzhov/AudioCLIP
+rem: work with last versions of the dependencies (problems with the versions in requirements.txt), may need to update librosa.display.waveplot to librosa.display.waveshow in the notebook
 
 ## XAI methods
 
