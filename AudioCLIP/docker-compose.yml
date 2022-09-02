@@ -1,0 +1,21 @@
+version: '2.3'
+services:
+  audioclip:
+    shm_size: '1024m'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER_ID=$USER_ID
+        - GROUP_ID=$GROUP_ID
+    image: audioclip
+    tty: true
+    volumes:
+      - /home/imagedpt/Desktop/AudioCLIP:/notebook_data
+    ports:
+      - 7799:8888
+    environment:
+      - PASSWORD=none
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
+    working_dir: /notebook_data
