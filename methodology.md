@@ -96,7 +96,7 @@ How to proceed to draw a roadmap:
 
 Prepare a first list. See below for the details.
 
-## Days 2-3: Empathize & Map
+## Days 2-4: Empathize & Map
 
 Goal: discover the user needs and choose a target
 
@@ -149,5 +149,51 @@ Interview guide:
 
 At the end, update the goal, questions and roadmap if needed.
 
+## Day 5: Fix the target
+
 ### Decide the target of the sprint
-Finally, definition of short term goal(s), i.e., the target(s) of the sprint (by merging roadmap and HMW notes, and analysing the result)
+
+Goal: definition of short term goal(s), i.e., the target(s) of the sprint (by merging roadmap and HMW notes, and analysing the result)
+
+Procedure:
+1. Gather all the HMW notes on the same frame
+2. Regroup notes into common themes and name these themes
+3. Vote for the most interesting/important questions
+4. Take the most popular notes and put them on the corresponding steps of the roadmap
+5. Decide on the user and the note to address during the sprint
+6. Based on the target note and user, choose the question(s) to answer during the sprint
+
+Homework (if needed): Prepare flash presentation (the goal is to explore existing tools & methods in search of interesting ideas for our solution)
+
+## Day 6: Ideate & Deciding or Design Studio
+
+### Flash prensetation
+
+Goal: benchmarking
+
+Each participant make quick presentations (3') of tools & methods that he finds interesting
+- For each presentation, prepare a note for each presentation with the main idea and a quick sketch
+
+### Ideate & Decide
+
+Goal: Solution design (the goal is to generate a lot of candidates by combining multiple generating activities)
+
+Process:
+1. Design brief: remind goal and other important elements of the sprint
+2. Solution research: each participant reviews gathered data up to now and thinks of potential idea of solutions
+3. Ideation: crazy-eight
+4. solution design: each participant design a more detailled solution based on generated idea
+5. presentation & critique: each participant present his solution (3') and others critique it (2')
+6. vote: for part of solutions first, then for whole solutions
+7. final decision
+
+### Storyboarding
+
+Goal: get a detailled solution and a potential use scenario
+
+Process:
+1. Draw cases as steps of the storyboard
+2. Define the opening step (i.e., start of the use scenario)
+3. Fill others cases of the storyboard
+
+Keep in mind that the complete scenario must allow a test of max 15'
