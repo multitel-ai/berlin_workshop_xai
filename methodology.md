@@ -178,20 +178,22 @@ Each participant make quick presentations (3') of tools & methods that he finds 
 
 Goal: Solution design (the goal is to generate a lot of candidates by combining multiple generating activities)
 
-Process:
+Procedure:
 1. Design brief: remind goal and other important elements of the sprint
 2. Solution research: each participant reviews gathered data up to now and thinks of potential idea of solutions
 3. Ideation: crazy-eight
-4. solution design: each participant design a more detailled solution based on generated idea
-5. presentation & critique: each participant present his solution (3') and others critique it (2')
-6. vote: for part of solutions first, then for whole solutions
-7. final decision
+4. solution design, iteration 1: each participant design a more detailled solution based on generated idea
+5. presentation & critique, iteration 1: each participant present his solution (3') and others critique it (2')
+6. solution design, iteration 2: each participant improves his solution based on others' critiques
+7. presentation & critique, iteration 2: same as iteration 1
+8. vote: for part of solutions first, then for whole solutions
+9. final decision
 
 ### Storyboarding
 
 Goal: get a detailled solution and a potential use scenario
 
-Process:
+Procedure:
 1. Draw cases as steps of the storyboard
 2. Define the opening step (i.e., start of the use scenario)
 3. Fill others cases of the storyboard
