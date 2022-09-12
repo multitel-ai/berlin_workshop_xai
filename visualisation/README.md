@@ -1,12 +1,12 @@
 # How to visualise saliency on data
 
-Article understanding RL models : https://distill.pub/2020/understanding-rl-vision/
 
-An Overview of Visualization Techniques for Explainable Machine Learning : https://goodekat.github.io/presentations/2020-isugg-iml/slides.html#1
 
 ## General
 
 [TrustMLVis Browser](https://trustmlvis.lnu.se/)
+[Understanding RL vision]( https://distill.pub/2020/understanding-rl-vision/)
+[An Overview of Visualization Techniques for Explainable Machine Learning](https://goodekat.github.io/presentations/2020-isugg-iml/slides.html#1)
 
 ## Text
 
