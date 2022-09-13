@@ -11,7 +11,7 @@ services:
     image: audioclip
     tty: true
     volumes:
-      - /home/imagedpt/Desktop/AudioCLIP:/notebook_data
+      - /home/imagedpt/Desktop/berlin_workshop_xai:/notebook_data
     ports:
       - 7799:8888
     environment:
