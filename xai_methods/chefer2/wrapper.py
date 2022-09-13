@@ -48,15 +48,29 @@ class WrappedMultiheadAttention(torch.nn.Module):
 
 
 def wrap_transformer(model):
+    """
+    The function wrap a transformer to allow easy retrieval of the attention weights
+    - Add a hook method that store the weights in a self.attention_weights dict, named by the original modules names
+    - Wrap every MultiheadAttention module to get weights and give them to the hook function
+    Warning: This function change the model in-place, it does not create a copy
+    :param model: Transformer module to wrap
+    :return: The wrapped module (optional since the model is modified in-place)
+    """
+    # Create the dictionary to store the weights as an attribute of the model
     model.attention_weights = {}
 
+    # define the hook function
     def set_attention_weights(self, layer_name, attention_weights):
         self.attention_weights[layer_name] = attention_weights
 
+    # Add the hook function as a method to the model
     model.set_attention_weights = MethodType(set_attention_weights, model)
 
+    # Loop over the modules to find and wrap the MultiheadAttention modules
     for name, module in list(model.named_modules()):
         if isinstance(module, MultiheadAttention):
             model.attention_weights[name] = None
             new_module = WrappedMultiheadAttention(module, name, model.set_attention_weights)
             rsetattr(model, name, new_module)
+
+    return module
