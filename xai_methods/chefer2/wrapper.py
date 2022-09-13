@@ -76,4 +76,4 @@ def wrap_transformer(model):
             # Use the new wrapped module
             rsetattr(model, name, new_module)
 
-    return module
+    return model
