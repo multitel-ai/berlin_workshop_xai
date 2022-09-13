@@ -6,6 +6,8 @@ from PIL import Image
 from flask import Flask, jsonify, request
 import requests
 
+import numpy as np
+
 from CLIP.clip import clip
 
 from xai_methods.chefer2 import wrap_transformer
@@ -42,8 +44,18 @@ def attentions():
     image_embedding = visual_transformer(image.type(model.dtype))
     text_embedding = model.encode_text(tokens)
 
+    image_attentions = visual_transformer.attention_weights
+    text_attentions = text_transformer.attention_weights
+
+    # cat the attentions weights dict to a tensor (n_layers, n_attention_heads_per_layer, n_tokens, n_tokens)
+    image_attentions = torch.cat([attn[1].detach().cpu() for attn in list(image_attentions.items())])
+    text_attentions = torch.cat([attn[1].detach().cpu() for attn in list(text_attentions.items())])
+
+
     response = jsonify({'img_emb': image_embedding.detach().cpu().numpy().tolist(),
                 'txt_emb': text_embedding.detach().cpu().numpy().tolist(),
+                'image_attention': image_attentions.numpy().tolist(),
+                'text_attention': text_attentions.numpy().tolist(),
                 })
 
     return response
