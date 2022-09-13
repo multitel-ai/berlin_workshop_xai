@@ -10,7 +10,7 @@ class WrappedMultiheadAttention(torch.nn.Module):
     Wrapped version of the MultiheadAttention Class
     - Call a MultiheadAttention module with "need_weights=True"
     - Store the attention weights using the given hook
-    - Return the originaly asked result (with or without the weights)
+    - Return the originally asked result (with or without the weights)
     """
     def __init__(self, multihead_attention, name, attention_forward_hook):
         """
@@ -25,22 +25,22 @@ class WrappedMultiheadAttention(torch.nn.Module):
         self.attention_forward_hook = attention_forward_hook
 
     def forward(self, query, key, value, **kwargs):
-        # need_weight save the original behaviour to return or not the weights
+        # need_weight save the original behaviour to return or not the attention weights
         if "need_weight" not in kwargs:
             # Set to False if nothing is specified
             need_weight = False
         else:
-            # Keep the asked behaviour is need_weight is specified
+            # Store the originally asked behaviour is need_weight is specified
             need_weight = kwargs["need_weight"]
 
-        # Set the kwargs need_weight argument for the inner MultiheadAttention to always True
+        # Set need_weight argument in the kwargs to always True for the inner MultiheadAttention
         kwargs["need_weights"] = True
         # Get the result with the attention weights
         x, attention_weight_output = self.attn(query, key, value, **kwargs)
         # Store the attention weights using the hook function
         self.attention_forward_hook(self.name, attention_weight_output)
 
-        # Return with or without the attention weights depending of the original need_weight parameter
+        # Return the result with or without the attention weights depending on the original need_weight parameter
         if need_weight:
             return x, attention_weight_output
         else:
@@ -50,7 +50,7 @@ class WrappedMultiheadAttention(torch.nn.Module):
 def wrap_transformer(model):
     """
     The function wrap a transformer to allow easy retrieval of the attention weights
-    - Add a hook method that store the weights in a self.attention_weights dict, named by the original modules names
+    - Add a hook method that store the weights in a self.attention_weights dictionary, named by the modules names
     - Wrap every MultiheadAttention module to get weights and give them to the hook function
     Warning: This function change the model in-place, it does not create a copy
     :param model: Transformer module to wrap
@@ -69,8 +69,11 @@ def wrap_transformer(model):
     # Loop over the modules to find and wrap the MultiheadAttention modules
     for name, module in list(model.named_modules()):
         if isinstance(module, MultiheadAttention):
+            # Create the named key in the dictionary
             model.attention_weights[name] = None
+            # Wrap the current MultiheadAttention module
             new_module = WrappedMultiheadAttention(module, name, model.set_attention_weights)
+            # Use the new wrapped module
             rsetattr(model, name, new_module)
 
     return module
