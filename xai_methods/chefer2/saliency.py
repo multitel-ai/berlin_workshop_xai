@@ -23,7 +23,7 @@ def salience(input1, input2, model, device):
       cam = cam.reshape(-1, cam.shape[-1], cam.shape[-1])
       grad = grad.reshape(-1, grad.shape[-1], grad.shape[-1])
       cam = grad * cam
-      cam = cam.reshape(batch_size, -1, cam.shape[-1]. cam.shape[-1])
+      cam = cam.reshape(batch_size, -1, cam.shape[-1], cam.shape[-1])
       cam = cam.clamp(min=0).mean(dim=1)
       R = R + torch.bmm(cam, R)
 
