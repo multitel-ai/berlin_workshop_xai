@@ -11,7 +11,7 @@ import numpy as np
 from CLIP.clip import clip
 
 from xai_methods.chefer2 import wrap_transformer
-from xai_methods.chefer2 import salience
+from xai_methods.chefer2 import chefer2_salience
 
 app = Flask(__name__)
 
