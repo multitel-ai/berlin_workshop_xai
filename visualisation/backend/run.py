@@ -24,6 +24,9 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 model, preprocess = clip.load(model_type)
 model.to(device)
 
+# Wrap the visual and text parts of clip to get the attentions weights
+visual_transformer = wrap_transformer(model.visual)
+text_transformer = wrap_transformer(model.transformer)
 
 # Requests sent to the /attentions endpoints return the attention weights
 @app.route('/attentions', methods=['POST'])
@@ -47,10 +50,6 @@ def attentions():
     input_resolution = model.visual.input_resolution
     context_length = model.context_length
     vocab_size = model.vocab_size
-
-    # Wrap the visual and text parts of clip to get the attentions weights
-    visual_transformer = wrap_transformer(model.visual)
-    text_transformer = wrap_transformer(model.transformer)
 
     # Tokenize the text
     tokens = clip.tokenize(text).to(device)
