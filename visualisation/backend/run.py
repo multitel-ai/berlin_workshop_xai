@@ -73,6 +73,9 @@ def attentions():
     image_embedding = visual_transformer(image.type(model.dtype))
     text_embedding = model.encode_text(tokens)
 
+    # Compute the cos similarity between the embeddings
+    cos_sim = image_embedding @ text_embedding.t()
+
     # Retrieve the attentions weights for image and text
     image_attentions = visual_transformer.attention_weights
     text_attentions = text_transformer.attention_weights
@@ -87,6 +90,7 @@ def attentions():
                         'image_attention': image_attentions.numpy().tolist(),
                         'text_attention': text_attentions.numpy().tolist(),
                         'img_coords': img_coords,
+                        'cos_sim': cos_sim.detach().cpu().item(),
                         })
 
     return response
