@@ -89,7 +89,9 @@ def attentions():
     image_attentions = torch.cat([attn[1].detach().cpu() for attn in list(image_attentions.items())])
     text_attentions = torch.cat([attn[1].detach().cpu() for attn in list(text_attentions.items())])
 
-    text_tokens = ["<CLS>"] + text.strip().split(" ") + ["<SEP>"]
+    #text_tokens = ["<CLS>"] + text.strip().split(" ") + ["<SEP>"]
+    text_tokens = ["<CLS>"] + [text] + ["<SEP>"]
+    img_tokens = [str(i) for i in range(len(img_coords))]
 
     #image_relevance, text_relevance = chefer2_saliency(image, tokens, model, device)
     image_relevance, text_relevance = 0, 0
@@ -103,7 +105,7 @@ def attentions():
                         'cos_sim': cos_sim.detach().cpu().item(),
                         'image_relevance': image_relevance,
                         'text_relevance': text_relevance,
-                        'tokens': text_tokens
+                        'tokens': text_tokens + img_tokens
                         })
 
     return response
