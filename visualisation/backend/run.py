@@ -67,7 +67,10 @@ def attentions():
     y = torch.tensor(range(y_size)).unsqueeze(1)
     x = torch.tensor(range(x_size)).unsqueeze(0)
     coord_tensor = torch.stack((y.repeat((1, y_size)), x.repeat((x_size, 1)))) * patch_size
-    img_coords = coord_tensor.flatten(1).T.numpy().tolist()
+    img_coords_list = coord_tensor.flatten(1).T.numpy().tolist()
+
+
+    img_coords = [(subList[0], subList[1]) for subList in img_coords_list]
 
     # Compute the embeddings for the image and the text
     image_embedding = visual_transformer(image.type(model.dtype))
@@ -88,7 +91,7 @@ def attentions():
 
     text_tokens = ["<CLS>"] + text[0].strip().split(" ") + ["<SEP>"]
 
-    #image_relevance, text_relevance = salience(image, tokens, model, device)
+    #image_relevance, text_relevance = chefer2_saliency(image, tokens, model, device)
     image_relevance, text_relevance = 0, 0
 
     # Send the response in a json
