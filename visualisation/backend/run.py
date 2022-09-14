@@ -89,7 +89,7 @@ def attentions():
     image_attentions = torch.cat([attn[1].detach().cpu() for attn in list(image_attentions.items())])
     text_attentions = torch.cat([attn[1].detach().cpu() for attn in list(text_attentions.items())])
 
-    text_tokens = ["<CLS>"] + text[0].strip().split(" ") + ["<SEP>"]
+    text_tokens = ["<CLS>"] + text.strip().split(" ") + ["<SEP>"]
 
     #image_relevance, text_relevance = chefer2_saliency(image, tokens, model, device)
     image_relevance, text_relevance = 0, 0
