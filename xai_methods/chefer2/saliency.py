@@ -1,3 +1,6 @@
+import torch
+
+
 def salience(input1, input2, model, device):
 
   def forward_backward(model, input1, input2):
