@@ -14,8 +14,11 @@ from xai_methods.chefer2 import wrap_transformer
 
 app = Flask(__name__)
 
+model_type = "ViT-B/32"
+patch_size = 32
+
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-model, preprocess = clip.load("ViT-B/32")
+model, preprocess = clip.load(model_type)
 model.to(device)
 
 @app.route('/attentions', methods=['POST'])
@@ -41,6 +44,16 @@ def attentions():
     tokens = clip.tokenize(text).to(device)
     image = preprocess(image).to(device).unsqueeze(0)
 
+    image_tokens_size = torch.tensor(image.shape[-2:]) // patch_size
+
+    y_size = image_tokens_size[0].item()
+    x_size = image_tokens_size[1].item()
+    y = torch.tensor(range(y_size)).unsqueeze(1)
+    x = torch.tensor(range(x_size)).unsqueeze(0)
+
+    coord_tensor = torch.stack((y.repeat((1, y_size)), x.repeat((x_size, 1)))) * patch_size
+    img_coords = coord_tensor.flatten(1).T.numpy().tolist()
+
     image_embedding = visual_transformer(image.type(model.dtype))
     text_embedding = model.encode_text(tokens)
 
@@ -53,10 +66,11 @@ def attentions():
 
 
     response = jsonify({'img_emb': image_embedding.detach().cpu().numpy().tolist(),
-                'txt_emb': text_embedding.detach().cpu().numpy().tolist(),
-                'image_attention': image_attentions.numpy().tolist(),
-                'text_attention': text_attentions.numpy().tolist(),
-                })
+                        'txt_emb': text_embedding.detach().cpu().numpy().tolist(),
+                        'image_attention': image_attentions.numpy().tolist(),
+                        'text_attention': text_attentions.numpy().tolist(),
+                        'img_coords': img_coords,
+                        })
 
     return response
 
