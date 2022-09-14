@@ -1,3 +1,5 @@
+import torch
+
 def salience(input1, input2, model, device, start_layer=-1):
   '''
   This method calculates the salience value using the method proposed in Hila et al, 2021 see here: https://arxiv.org/pdf/2103.15679.pdf
