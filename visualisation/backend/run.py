@@ -11,6 +11,7 @@ import numpy as np
 from CLIP.clip import clip
 
 from xai_methods.chefer2 import wrap_transformer
+from xai_methods.chefer2 import salience
 
 app = Flask(__name__)
 
@@ -72,6 +73,8 @@ def attentions():
     image_embedding = visual_transformer(image.type(model.dtype))
     text_embedding = model.encode_text(tokens)
 
+    #TODO hook the embedding at each attention layer in wrapper?
+
     # Compute the cos similarity between the embeddings
     cos_sim = image_embedding @ text_embedding.t()
 
@@ -83,6 +86,11 @@ def attentions():
     image_attentions = torch.cat([attn[1].detach().cpu() for attn in list(image_attentions.items())])
     text_attentions = torch.cat([attn[1].detach().cpu() for attn in list(text_attentions.items())])
 
+    text_tokens = ["<CLS>"] + text[0].strip().split(" ") + ["<SEP>"]
+
+    #image_relevance, text_relevance = salience(image, tokens, model, device)
+    image_relevance, text_relevance = 0, 0
+
     # Send the response in a json
     response = jsonify({'img_emb': image_embedding.detach().cpu().numpy().tolist(),
                         'txt_emb': text_embedding.detach().cpu().numpy().tolist(),
@@ -90,6 +98,9 @@ def attentions():
                         'text_attention': text_attentions.numpy().tolist(),
                         'img_coords': img_coords,
                         'cos_sim': cos_sim.detach().cpu().item(),
+                        'image_relevance': image_relevance,
+                        'text_relevance': text_relevance,
+                        'tokens': text_tokens
                         })
 
     return response

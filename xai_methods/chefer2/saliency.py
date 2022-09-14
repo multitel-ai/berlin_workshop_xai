@@ -1,10 +1,10 @@
-import torch
-
-
 def salience(input1, input2, model, device):
 
   def forward_backward(model, input1, input2):
+    #Fills in the attention hooks
     out1, out2 = model(input1, input2)
+    
+    #Computes the gradients
     out1.backward(retain_graph=True)
 
   def relevance_score(model, batch_size, reverse=True):
@@ -34,6 +34,8 @@ def salience(input1, input2, model, device):
   batch_size = input1.shape[0]
 
   input1_relevance = relevance_score(model.visual, batch_size, True)[:, 0, 1:]
-  input2_relevance = relevance_score(model.transformer, batch_size)
+  CLS_idx = input2.argmax(dim=-1)
+  input2_relevance = relevance_score(model.transformer, batch_size)[:,CLS_idx, 1:CLS_idx]
+
 
   return input1_relevance, input2_relevance
