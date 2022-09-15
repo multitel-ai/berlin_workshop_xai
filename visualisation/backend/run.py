@@ -66,7 +66,8 @@ def attentions():
     x_size = image_tokens_size[1].item()
     y = torch.tensor(range(y_size)).unsqueeze(1)
     x = torch.tensor(range(x_size)).unsqueeze(0)
-    coord_tensor = torch.stack((y.repeat((1, y_size)), x.repeat((x_size, 1)))) * patch_size
+    #coord_tensor = torch.stack((y.repeat((1, y_size)), x.repeat((x_size, 1)))) * patch_size
+    coord_tensor = torch.stack((y.repeat((1, y_size)), x.repeat((x_size, 1))))
     img_coords_list = coord_tensor.flatten(1).T.numpy().tolist()
 
 
