@@ -9,6 +9,8 @@ import requests
 import numpy as np
 
 from CLIP.clip import clip
+from CLIP.clip.simple_tokenizer import SimpleTokenizer as _Tokenizer
+_tokenizer = _Tokenizer()
 
 from xai_methods.chefer2 import wrap_transformer
 from xai_methods.chefer2 import chefer2_saliency
@@ -53,7 +55,10 @@ def attentions():
     vocab_size = model.vocab_size
 
     # Tokenize the text
-    tokens = clip.tokenize(text).to(device)
+    text_tokens = clip.tokenize(text).to(device)
+    # text_tokens=torch.Tensor(_tokenizer.encode(text)).to(device)
+    # print(text_tokens)
+    # text_tokens_decoded = [_tokenizer.decode([a]) for a in text_tokens]
 
     # Preprocess the image into a tensor with the right dimensions
     image = preprocess(image).to(device).unsqueeze(0)
@@ -75,7 +80,7 @@ def attentions():
 
     # Compute the embeddings for the image and the text
     image_embedding = visual_transformer(image.type(model.dtype))
-    text_embedding = model.encode_text(tokens)
+    text_embedding = model.encode_text(text_tokens)
 
     #TODO hook the embedding at each attention layer in wrapper?
 
@@ -91,11 +96,11 @@ def attentions():
     text_attentions = torch.cat([attn[1].detach().cpu() for attn in list(text_attentions.items())])
 
     #text_tokens = ["<CLS>"] + text.strip().split(" ") + ["<SEP>"]
-    text_tokens = ["<CLS>"] + [text] + ["<SEP>"]
+    # text_tokens_decoded = ["<CLS>"] + text.split() + ["<SEP>"]
+    text_tokens_decoded =  text.split()
     img_tokens = [str(i) for i in range(len(img_coords))]
 
-    #image_relevance, text_relevance = chefer2_saliency(image, tokens, model, device)
-    image_relevance, text_relevance = 0, 0
+    image_relevance, text_relevance = chefer2_saliency(image, text_tokens, model, device)
 
     # Send the response in a json
     response = jsonify({'img_emb': image_embedding.detach().cpu().numpy().tolist(),
@@ -104,9 +109,13 @@ def attentions():
                         'text_attention': text_attentions.numpy().tolist(),
                         'img_coords': img_coords,
                         'cos_sim': cos_sim.detach().cpu().item(),
-                        'image_relevance': image_relevance,
-                        'text_relevance': text_relevance,
-                        'tokens': text_tokens + img_tokens
+                        'image_relevance': image_relevance.detach().cpu().numpy().tolist(),
+                        'text_relevance': text_relevance.detach().cpu().numpy().tolist(),
+                        'text_tokens': text_tokens.detach().cpu().numpy().tolist(),
+                        'img_tokens': img_tokens,
+                        'img_preprocess': image.detach().cpu().numpy().tolist(),
+                        'text_tokens_decoded': text_tokens_decoded
+                        # 'tokens': text_tokens + img_tokens
                         })
 
     return response
