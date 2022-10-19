@@ -1,0 +1,16 @@
+
+version: '2.3'
+services:
+  clip-api:
+    shm_size: '1024m'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: clip-api
+    tty: true
+    ports:
+      - 5000:5000
+    environment:
+      - PASSWORD=none
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
