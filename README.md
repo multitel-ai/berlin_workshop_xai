@@ -16,7 +16,7 @@ docker-compose up --build
 This will launck a flask app that can be contacted at port `5000` of your local machine. A full example of how to interact with the API is given in the `api_demo.ipynb` notebook. To run the notebook, run a `jupyter` server in the running container with:
 
 ```bash
-docker exec YOUR_CONTAINER_ID jupyter notebook --allow-root --ip=0.0.0.0
+docker exec YOUR_CONTAINER_ID jupyter notebook --notebook-dir=/notebook_data --allow-root --ip=0.0.0.0
 ```
 Copy the URL logged in the console and you should have acces to a notebook running in the container.
 
