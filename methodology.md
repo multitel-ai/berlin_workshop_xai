@@ -199,3 +199,38 @@ Procedure:
 3. Fill others cases of the storyboard
 
 Keep in mind that the complete scenario must allow a test of max 15'
+
+## Days 7-8: Prototyping
+
+Goal: prototype the solution and prepare the tests
+
+Tasks & Activities:
+- Design and implement the prototype (the goal is to have something that **seems** functional, to be able to conduct tests, need to identify best tools to use)
+- Prepare testing sessions (design test protocol and dry-run)
+
+Maybe 2 tracks are possible here:
+- implement a non-fonctionnal but complete prototype for the tests
+- explore technical possibilities and constraints to implement a functionnal one
+
+**TODO list tools that can be used at this point**
+
+## Day 9: Testing & Take away
+
+### Testing
+
+Goal: test the solution with targeted users (participants of Berlin's workshop, they must be contacted before)
+
+Tasks & Activities:
+- Conduct user tests ! (1 hour per session, all the participants observe the tests but not in the same room !)
+- Gather data and learn !
+
+### Take away
+
+Goal: analyze results and write the final report
+
+Tasks & Activities:
+- Analyze results
+- Discuss future works and valorization of the results (publications, etc.)
+- Write the final report
+- Make the final presentation
+- Retrospective on the course of the sprint (get feedback and improve the methodology)
