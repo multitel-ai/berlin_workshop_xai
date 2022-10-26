@@ -10,7 +10,10 @@ services:
     tty: true
     ports:
       - 5000:5000
+      - 8888:8888
     environment:
       - PASSWORD=none
       - NVIDIA_VISIBLE_DEVICES=all
     runtime: nvidia
+    volumes:
+      - .:/notebook_data

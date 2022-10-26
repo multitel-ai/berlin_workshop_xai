@@ -13,9 +13,19 @@ The CLIP API can be launched in a docker container. Simply run
 docker-compose up --build
 ```
 
-This will launck a flask app that can be contacted at port `5000` of your local machine. A full example of how to interact with the API is given in the `api_demo.ipynb` notebook.
+This will launck a flask app that can be contacted at port `5000` of your local machine. A full example of how to interact with the API is given in the `api_demo.ipynb` notebook. To run the notebook, run a `jupyter` server in the running container with:
 
-Alternatively, you can test the API in `python` with:
+```bash
+docker exec YOUR_CONTAINER_ID jupyter notebook --allow-root --ip=0.0.0.0
+```
+Copy the URL logged in the console and you should have acces to a notebook running in the container.
+
+You can find your docker container id with
+```bash
+docker ps
+```
+
+Alternatively, you can test the API on your host in `python` with:
 
 ```python
 import requests
